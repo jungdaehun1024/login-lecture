@@ -1,0 +1,19 @@
+// Express를 사용한 서버 띄우기
+
+//모듈
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+//import
+const home = require("./routes/home");
+
+
+
+app.set("views","./views");//화면(views)을 관리해줄 폴더이름을 두번째 파라미터로
+app.set("view engine","ejs");//어떤 엔진으로 해석할지
+
+app.use("/",home);//use- > 미들웨어를 등록해주는메서드
+
+
+module.exports = app;

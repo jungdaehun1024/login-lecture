@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="/js/home/login.js"></script>
+   <script src="/js/home/login.js" defer></script>
+   <!--defer 속성은 <script> 태그에 사용되어, 외부 스크립트 파일을 HTML 문서가 모두 파싱된 후에 실행하도록 지시합니다. 즉, 스크립트가 실행되는 동안 HTML 파싱이 중단되지 않고 계속 진행됩니다.-->
     <title>Document</title>
 </head>
 
 <body>
-    <input type="text" placeholder="아이디"> <br>
-    <input type="text" placeholder="비밀번호"> <br>
+    <input type="text" id="id" placeholder="아이디"> <br>
+    <input type="text" id="password" placeholder="비밀번호"> <br>
     <button>로그인</button>
 </body>
 

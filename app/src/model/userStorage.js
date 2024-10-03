@@ -1,5 +1,6 @@
 "use strict"
-const fs = require("fs").promises;
+const db = require("../config/db");
+
 class UserStorage{
     static #getUserInfo(data,id){
         const users = JSON.parse(data);
@@ -13,9 +14,10 @@ class UserStorage{
         return userInfo;
     }
  
+    static #getUsers(data,isAll,fields){
+        const users = JSON.parse(data);
+        if(isAll) return users;
 
-    static getUsers(...fields){
-        // const users =  this.#users;
         const newUsers = fields.reduce((newUsers,field)=>{
             if(users.hasOwnProperty(field)){
                 newUsers[field] = users[field]; //newUsers에 대괄호 표기법 사용해 동적으로 속성 추가
@@ -23,28 +25,29 @@ class UserStorage{
             return newUsers;
         },{});
         return newUsers ;
+    }
+
+
+    static getUsers(isAll,...fields){
+    
         
     }
 
     static getUserInfo(id){
-      
-    return fs.readFile("./src/databases/users.json")
-    .then((data)=>{
-        return this.#getUserInfo(data,id);
-    })
-    .catch((err)=> console.error(err));
-       
+
+        return new Promise((resolve,reject)=>{
+            db.query("SELECT * FROM users WHERE id = ?",[id], (err,data)=>{
+                if(err) reject(err);
+                 resolve(data[0]);
+              });
+        });
+     
     }
 
 
 
-    static save(userInfo){
-        console.log(userInfo.id);
-        // const users = this.#users;
-        users.id.push(userInfo.id);
-        users.name.push(userInfo.name);
-        users.password.push(userInfo.password);
-        return {success : true};
+    static async save(userInfo){
+
     }
 }
 

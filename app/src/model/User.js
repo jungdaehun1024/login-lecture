@@ -9,7 +9,10 @@ class User{
 
     async login(){
     const client = this.body;
-    const {id,password} = await UserStorage.getUserInfo(client.id);
+    // await UserStorage.getUserInfo(client.id);
+    const result =await UserStorage.getUserInfo(client.id);
+    // console.log(result+"result값");
+    const {id,password} = result;
     
 
     if(id){
@@ -21,11 +24,14 @@ class User{
     return  {success : false,msg:"존재하지 않는 아이디"}
     }
 
-    register(){
+    async register(){
     const client = this.body;
-    
-     const response = UserStorage.save(client);
-     return response;
+    try{
+      const response = await UserStorage.save(client);
+      return response;
+    }catch(err){
+      return {success : false , msg: err}
+    }
     
     }
 }

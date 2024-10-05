@@ -9,19 +9,19 @@ class UserStorage{
 
             db.query(query,[id], (err,data)=>{
                 if(err) reject(`${err}`);
-                 resolve(data[0]);
+                else  resolve(data[0]);
               });
         });
     }
-    static save(userInfo){
+    static async save(userInfo){
 
         return new Promise((resolve,reject)=>{
             const query = "INSERT INTO users(`id`,`password`,`name`)VALUES(?,?,?)";
             const params = [userInfo.id,userInfo.password,userInfo.name];
 
             db.query(query,params,(err,data)=>{
-                if(err) reject(`${err}`);
-                resolve({success : true});
+                if(err) reject(err);
+                else resolve({success : true});
             });
         })
       

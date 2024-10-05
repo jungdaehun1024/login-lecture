@@ -1,5 +1,6 @@
 "use strict"
 
+const { response } = require("express");
 const UserStorage =require("./userStorage");
 class User{
 
@@ -23,7 +24,7 @@ class User{
       }
       return  {success : false,msg:"존재하지 않는 아이디"}
     }catch(err){
-      return {success : false, msg: err};
+      return {success : false, err};
     }
  
     }
@@ -31,11 +32,13 @@ class User{
     async register(){
     const client = this.body;
     // console.log("client:"+client.id);
-    const result = await UserStorage.save(client);
-    if(result.success){
-      return {success : true};
+    
+    try{
+      const reponse = await UserStorage.save(client);
+      return reponse;
+    }catch(err){
+      return {success:false , err};
     }
-    return {success : false , msg: err}
-    }
+}
 }
 module.exports = User;

@@ -10,24 +10,29 @@ class User{
     async login(){
     const client = this.body;
     // await UserStorage.getUserInfo(client.id);
-    const result =await UserStorage.getUserInfo(client.id);
-    const {id,password} = result;
-    
 
-    if(id){
-      if(id === client.id && password === client.password){
-        return {success : true};
+    try{
+      const result =await UserStorage.getUserInfo(client.id);
+      const {id,password} = result;
+  
+      if(id){
+        if(id === client.id && password === client.password){
+          return {success : true};
+        }
+        return {success : false,msg:"비밀번호가 틀렸습니다."}
       }
-      return {success : false,msg:"비밀번호가 틀렸습니다."}
+      return  {success : false,msg:"존재하지 않는 아이디"}
+    }catch(err){
+      return {success : false, msg: err};
     }
-    return  {success : false,msg:"존재하지 않는 아이디"}
+ 
     }
 
     async register(){
     const client = this.body;
     // console.log("client:"+client.id);
     const result = await UserStorage.save(client);
-    if(result.affectedRows){
+    if(result.success){
       return {success : true};
     }
     return {success : false , msg: err}

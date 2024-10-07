@@ -2,7 +2,7 @@ const fs = require("fs");
 const appRoot = require("app-root-path");
 
 const accessLogStream =  fs.createWriteStream(
-    `${appRoot}/log/access.log`, { flags: 'a' });
+    `${appRoot}/morgan_log/access.log`, { flags: 'a' });
 
 
     /**
